@@ -77,10 +77,15 @@ void ruleChecker(int x,int y){  //Make all changes to a copy of board
     }
 
     if (neighbours>0){
-        printf("Y: %d X: %d     Neighbours: %d\n", x, y, neighbours);
+        //printf("Y: %d X: %d     Neighbours: %d\n", x, y, neighbours);
     }
 
-    if ((neighbours == 2) || (neighbours == 3)){  //Survivals
+    if (neighbours == 3 ){  //Births
+        //printf("Birth at %d,%d\n", x,y);
+        boardCopy[x][y] = 1;
+    }
+
+    if ( ((neighbours == 2) || (neighbours == 3)) && (boardCopy[x][y] = 1)){  //Survivals
         //printf("Survivor at %d,%d\n", x,y);
         boardCopy[x][y] = 1;
     }
@@ -91,10 +96,7 @@ void ruleChecker(int x,int y){  //Make all changes to a copy of board
 
     }
 
-    if (neighbours == 3 ){  //Births
-        //printf("Birth at %d,%d\n", x,y);
-        boardCopy[x][y] = 1;
-    }
+
 }
 
 void generation(){
