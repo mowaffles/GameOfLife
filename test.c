@@ -75,6 +75,27 @@ void printBoard(){
 
 }
 
+void printBoardCopy(){
+    printf("Generation: %d\n", generationNum);
+    int i, j;
+    for (j=0; j<24; j++){
+        for (i=0;i<70;i++){
+            if (boardCopy[j][i] == 1){
+                printf("+");
+            }
+            else if (boardCopy[j][i] == 0){
+                printf(" ");
+            }
+            else{ //If an error
+                printf("!");
+            }
+        }
+        printf("\n");
+    }
+
+}
+
+
 int main(){   
 
     enterPattern();

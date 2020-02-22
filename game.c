@@ -11,7 +11,13 @@ void enterPattern(){
             board[i][j] = 0;
         }
     }
-    board[5][0] = 1;
+
+    //Test Pattern
+    board[10][15] = 1;
+    board[10][14] = 1;
+    board[11][15] = 1;
+
+    /*  Initial Pattern
     board[17][22] = 1;
     board[16][23] = 1;
     board[15][24] = 1;
@@ -19,6 +25,7 @@ void enterPattern(){
     board[15][26] = 1;
     board[16][26] = 1;
     board[17][26] = 1;
+    */
 }
 
 int patternDetect(){
@@ -26,7 +33,7 @@ int patternDetect(){
     return 0;
 }
 
-void copyArrayBoard(){ // Copys current board into a temporary one
+void BoardtoCopy(){ // Copys current board into a temporary one
     int i,j;
 
     for (i=0;i<24;i++){
@@ -39,7 +46,7 @@ void copyArrayBoard(){ // Copys current board into a temporary one
 
 }
 
-void copyArrayBoardCopy(){ // Copys current board into a temporary one
+void CopyToBoard(){ // Copys current board into a temporary one
     int i,j;
 
     for (i=0;i<24;i++){
@@ -76,39 +83,39 @@ void ruleChecker(int x,int y){  //Make all changes to a copy of board
         }
     }
 
-    if (neighbours>0){
+    if (neighbours==3){
         //printf("Y: %d X: %d     Neighbours: %d\n", x, y, neighbours);
     }
 
     if (neighbours == 3 ){  //Births
-        //printf("Birth at %d,%d\n", x,y);
+        printf("Birth at %d,%d\n", x,y);
+   if (neighbours == 3 ){  //Births
+        printf("Birth at %d,%d\n", x,y);
         boardCopy[x][y] = 1;
     }
-
-    if ( ((neighbours == 2) || (neighbours == 3)) && (boardCopy[x][y] = 1)){  //Survivals
-        //printf("Survivor at %d,%d\n", x,y);
-        boardCopy[x][y] = 1;
+    if (board[x][y] = 1){  //Survivals
+        if ((neighbours == 2) || (neighbours == 3)) {
+            printf("Survivor at %d,%d\n", x,y);
+            boardCopy[x][y] = 1;
+        } 
     }
 
     if ((neighbours >= 4) || (neighbours <= 1)){  //Deaths
         //printf("Death\n");
         boardCopy[x][y] = 0;
-
     }
-
-
 }
 
 void generation(){
-    //copyArrayBoard();
 
+    BoardtoCopy();
     for (int j=0; j<24; j++){ //iterate board for RuleChecker
         for (int i=0;i<70;i++){
             ruleChecker(j,i);
         }
     }
 
-    copyArrayBoardCopy();
+    CopyToBoard();
 
     generationNum++;
 }
