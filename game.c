@@ -12,12 +12,12 @@ void enterPattern(){
         }
     }
 
-    //Test Pattern
+    /*Test Pattern
     board[10][15] = 1;
     board[10][14] = 1;
     board[11][15] = 1;
-
-    /*  Initial Pattern
+*/
+    //  Initial Pattern
     board[17][22] = 1;
     board[16][23] = 1;
     board[15][24] = 1;
@@ -25,7 +25,7 @@ void enterPattern(){
     board[15][26] = 1;
     board[16][26] = 1;
     board[17][26] = 1;
-    */
+    
 }
 
 int patternDetect(){
@@ -138,9 +138,9 @@ int main(){
 
     while (patternDetect() == 0){
         printBoard();
-        usleep(1000000);
+        usleep(100000);
         generation();
-        usleep(1000000);
+        usleep(100000);
     }
 
     return 0;
