@@ -61,15 +61,11 @@ void ruleChecker(int x,int y){  //Make all changes to a copy of board
     //Check num of neighbours
     for (i = -1; i < 2; i++){ //X
         for (j = -1;j < 2;j++){  //Y
-            if ((x+i < 0) || (y+j < 0)){
+            if ((x+i < 0) || (y+j < 0) || (x+i > 23) || (y+j > 69)){ //If at an edge
                 //printf("Pass1 ");
                 continue;
             }
-            if ((x+i > 23) || (y+j > 69)){
-                //printf("Pass2 ");
-                continue;
-            }
-            if ((i == 0) && (j == 0)){
+            if ((i == 0) && (j == 0)){ //Skip the origin
                 //printf("Pass3 ");
                 continue;
             }
@@ -80,14 +76,16 @@ void ruleChecker(int x,int y){  //Make all changes to a copy of board
         }
     }
 
-    //printf("Neighbours: %d\n", neighbours);
+    if (neighbours>0){
+        printf("Y: %d X: %d     Neighbours: %d\n", x, y, neighbours);
+    }
 
     if ((neighbours == 2) || (neighbours == 3)){  //Survivals
         //printf("Survivor at %d,%d\n", x,y);
         boardCopy[x][y] = 1;
     }
 
-    if (neighbours >= 4){  //Deaths
+    if ((neighbours >= 4) || (neighbours <= 1)){  //Deaths
         //printf("Death\n");
         boardCopy[x][y] = 0;
 
@@ -100,7 +98,7 @@ void ruleChecker(int x,int y){  //Make all changes to a copy of board
 }
 
 void generation(){
-    copyArrayBoard();
+    //copyArrayBoard();
 
     for (int j=0; j<24; j++){ //iterate board for RuleChecker
         for (int i=0;i<70;i++){
@@ -109,6 +107,7 @@ void generation(){
     }
 
     copyArrayBoardCopy();
+
     generationNum++;
 }
 
@@ -138,9 +137,9 @@ int main(){
 
     while (patternDetect() == 0){
         printBoard();
-        usleep(100000);
+        usleep(1000000);
         generation();
-        usleep(100000);
+        usleep(1000000);
     }
 
     return 0;
