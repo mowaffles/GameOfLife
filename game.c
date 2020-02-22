@@ -11,7 +11,6 @@ void enterPattern(){
             board[i][j] = 0;
         }
     }
-
     board[5][0] = 1;
     board[17][22] = 1;
     board[16][23] = 1;
