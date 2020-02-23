@@ -7,6 +7,7 @@ int boardN1[24][70]; //Previous Board
 int boardN2[24][70]; //Previous-1 Board
 int boardN3[24][70]; //Previous-2 Board
 int generationNum = 0;
+int populationNum = 7;
 
 void enterPattern(){
     for (int i=0;i<24;i++){
@@ -37,6 +38,7 @@ int patternDetect(){
     return 0;
 }
 
+/*
 void BoardCopy(int board1[][], int board2[][]){
     int i,j;
 
@@ -46,6 +48,7 @@ void BoardCopy(int board1[][], int board2[][]){
         }
     }
 }
+*/
 
 void BoardtoCopy(){ // Copys current board into a temporary one
     int i,j;
@@ -62,10 +65,13 @@ void BoardtoCopy(){ // Copys current board into a temporary one
 
 void CopyToBoard(){ // Copys current board into a temporary one
     int i,j;
-
+    populationNum=0;
     for (i=0;i<24;i++){
         for (j=0; j<70; j++){
             board[i][j] = boardCopy[i][j];
+            if (boardCopy[i][j] == 1){
+                populationNum++;
+            }
         }
     }
 
@@ -127,7 +133,7 @@ void generation(){
 }
 
 void printBoard(){
-    printf("Generation: %d\n", generationNum);
+    printf("Generation: %d         Population: %d\n", generationNum, populationNum);
     int i, j;
     for (j=0; j<24; j++){
         for (i=0;i<70;i++){
