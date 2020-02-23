@@ -3,6 +3,9 @@
 
 int board[24][70];
 int boardCopy[24][70];
+int boardN1[24][70]; //Previous Board
+int boardN2[24][70]; //Previous-1 Board
+int boardN3[24][70]; //Previous-2 Board
 int generationNum = 0;
 
 void enterPattern(){
@@ -29,8 +32,19 @@ void enterPattern(){
 }
 
 int patternDetect(){
+    
 
     return 0;
+}
+
+void BoardCopy(int board1[][], int board2[][]){
+    int i,j;
+
+    for (i=0;i<24;i++){
+        for (j=0; j<70; j++){
+            board1[i][j] = board2[i][j];
+        }
+    }
 }
 
 void BoardtoCopy(){ // Copys current board into a temporary one

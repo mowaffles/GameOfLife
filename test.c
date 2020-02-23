@@ -27,32 +27,18 @@ int patternDetect(){
     return 0;
 }
 
-void copyArrayBoard(){ // Copys current board into a temporary one
-
-/*
+void copyBoard(int *board1[24][70], int *board2[24][70]){ // Copies first arg into second
     int i,j;
 
+    printf("TESTING: %d \n", *board2[15][24]);
+/*
     for (i=0;i<24;i++){
         for (j=0; j<70; j++){
-            boardCopy[i][j] = board[i][j];
+            //printf("I: %d, J: %d\n",i,j);
+            board2[i][j] = board1[i][j];
         }
     }
 */
-    memcpy(boardCopy, board, sizeof (int) * 24 * 70);
-
-}
-
-void copyArrayBoardCopy(){ // Copys current board into a temporary one
-    int i,j;
-
-    for (i=0;i<24;i++){
-        for (j=0; j<70; j++){
-            board[i][j] = boardCopy[i][j];
-        }
-    }
-
-    //memcpy(board, boardCopy, sizeof (int) * 24 * 70);
-
 }
 
 void printBoard(){
@@ -75,36 +61,13 @@ void printBoard(){
 
 }
 
-void printBoardCopy(){
-    printf("Generation: %d\n", generationNum);
-    int i, j;
-    for (j=0; j<24; j++){
-        for (i=0;i<70;i++){
-            if (boardCopy[j][i] == 1){
-                printf("+");
-            }
-            else if (boardCopy[j][i] == 0){
-                printf(" ");
-            }
-            else{ //If an error
-                printf("!");
-            }
-        }
-        printf("\n");
-    }
-
-}
-
-
 int main(){   
 
     enterPattern();
 
     printBoard();
 
-    copyArrayBoardCopy();
-
-    printBoard();
+    copyBoard(&boardCopy, &board);
 
     return 0;
 }
