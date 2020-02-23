@@ -33,8 +33,46 @@ void enterPattern(){
 }
 
 int patternDetect(){
-    
+    if(OldBoardSave() == 1){ //If pattern found
+        return 1;
+    }
+    else{  //If no pattern
+        return 0;
+    }
+    return 0;
+}
 
+int OldBoardSave(){
+    int i,j;
+    int compareN1, compareN2, compareN3;
+
+    for (i=0;i<24;i++){ //Board to N1
+        for (j=0; j<70; j++){
+            if ( (compareN1==1) && (boardN1[i][j] != board[i][j])){
+                compareN1 = 0;
+            }
+            boardN1[i][j] = board[i][j];
+        }
+    }
+    for (i=0;i<24;i++){ //BoardN1 to N2
+        for (j=0; j<70; j++){
+            if ( (compareN2==1) && (boardN2[i][j] != boardN1[i][j])){
+                compareN2 = 0;
+            }
+            boardN2[i][j] = boardN1[i][j];
+        }
+    }
+    for (i=0;i<24;i++){ //BoardN2 to N3
+        for (j=0; j<70; j++){
+            if ( (compareN3==1) && (boardN3[i][j] != boardN2[i][j])){
+                compareN3 = 0;
+            }
+            boardN3[i][j] = boardN2[i][j];
+        }
+    }
+    if ((compareN1 == 1) || (compareN2 == 1) || (compareN3 == 1)){
+        return 1;
+    }
     return 0;
 }
 
