@@ -1,15 +1,8 @@
 #include <stdio.h>
 #include <unistd.h> 
 
-int board[24][70];
-int boardCopy[24][70];
-int boardN1[24][70]; //Previous Board
-int boardN2[24][70]; //Previous-1 Board
-int boardN3[24][70]; //Previous-2 Board
-int generationNum = 0;
-int populationNum = 7;
+void enterPattern(int board[24][70]){
 
-void enterPattern(){
     for (int i=0;i<24;i++){
         for (int j=0; j<70; j++){
             board[i][j] = 0;
@@ -32,8 +25,8 @@ void enterPattern(){
     
 }
 
-int patternDetect(){
-    if(OldBoardSave() == 1){ //If pattern found
+int patternDetect(int board[24][70], int boardN1[24][70], int boardN2[24][70], int boardN3[24][70]){
+    if(OldBoardSave(board, boardN1, boardN2, boardN3) == 1){ //If pattern found
         return 1;
     }
     else{  //If no pattern
@@ -42,7 +35,7 @@ int patternDetect(){
     return 0;
 }
 
-int OldBoardSave(){
+int OldBoardSave(int board[24][70], int boardN1[24][70], int boardN2[24][70], int boardN3[24][70]){
     int i,j;
     int compareN1, compareN2, compareN3;
 
@@ -88,7 +81,7 @@ void BoardCopy(int board1[][], int board2[][]){
 }
 */
 
-void BoardtoCopy(){ // Copys current board into a temporary one
+void BoardtoCopy(int board[24][70], int boardCopy[24][70]){ // Copys current board into a temporary one
     int i,j;
 
     for (i=0;i<24;i++){
@@ -101,14 +94,14 @@ void BoardtoCopy(){ // Copys current board into a temporary one
 
 }
 
-void CopyToBoard(){ // Copys current board into a temporary one
+void CopyToBoard(int board[24][70], int boardCopy[24][70], int *populationNum){ // Copys current board into a temporary one
     int i,j;
-    populationNum=0;
+    *populationNum=0;
     for (i=0;i<24;i++){
         for (j=0; j<70; j++){
             board[i][j] = boardCopy[i][j];
             if (boardCopy[i][j] == 1){
-                populationNum++;
+                *populationNum = *populationNum+1;
             }
         }
     }
@@ -117,7 +110,7 @@ void CopyToBoard(){ // Copys current board into a temporary one
 
 }
 
-void ruleChecker(int x,int y){  //Make all changes to a copy of board
+void ruleChecker(int x,int y, int board[24][70], int boardCopy[24][70]){  //Make all changes to a copy of board
 
     int neighbours = 0;
     int i,j;
@@ -156,22 +149,21 @@ void ruleChecker(int x,int y){  //Make all changes to a copy of board
     }
 }
 
-void generation(){
+void generation(int board[24][70], int boardCopy[24][70], int *generationNum, int *populationNum){
 
-    BoardtoCopy();
+    BoardtoCopy(board, boardCopy);
     for (int j=0; j<24; j++){ //iterate board for RuleChecker
         for (int i=0;i<70;i++){
-            ruleChecker(j,i);
+            ruleChecker(j,i, board, boardCopy);
         }
     }
 
-    CopyToBoard();
-
-    generationNum++;
+    CopyToBoard(board, boardCopy, populationNum);
+    *generationNum = *generationNum+1;
 }
 
-void printBoard(){
-    printf("Generation: %d         Population: %d\n", generationNum, populationNum);
+void printBoard(int board[24][70],int *generationNum,int *populationNum){
+    printf("Generation: %d         Population: %d\n", *generationNum, *populationNum);
     int i, j;
     for (j=0; j<24; j++){
         for (i=0;i<70;i++){
@@ -192,12 +184,21 @@ void printBoard(){
 
 int main(){   
 
-    enterPattern();
+    int board[24][70];
+    int boardCopy[24][70];
+    int boardN1[24][70]; //Previous Board
+    int boardN2[24][70]; //Previous-1 Board
+    int boardN3[24][70]; //Previous-2 Board
+    int generationNum = 0;
+    int populationNum = 7;
 
-    while (patternDetect() == 0){
-        printBoard();
+    board[0][0] = 0;
+    enterPattern(board);
+
+    while (patternDetect(board, boardN1, boardN2, boardN3) == 0){
+        printBoard(board, &generationNum, &populationNum);
         usleep(100000);
-        generation();
+        generation(board, boardCopy, &generationNum, &populationNum);
         usleep(100000);
     }
 
