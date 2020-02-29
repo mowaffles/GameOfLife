@@ -20,54 +20,38 @@ void enterPattern(){
     board[15][26] = 1;
     board[16][26] = 1;
     board[17][26] = 1;
+
+
+        for (int i=0;i<24;i++){
+        for (int j=0; j<70; j++){
+            boardCopy[i][j] = 0;
+        }
+    }
+
+    boardCopy[5][3] = 1;
+    boardCopy[17][22] = 1;
+    boardCopy[16][23] = 1;
+    boardCopy[15][24] = 1;
+    boardCopy[15][25] = 1;
+    boardCopy[15][26] = 1;
+    boardCopy[16][26] = 1;
+    boardCopy[17][26] = 1;
 }
 
 int patternDetect(){
-
+    printf("Size: %d\n", sizeof(board));
+    if ( memcmp(board, boardCopy, sizeof(board)) == 0){
+        printf("SUCCESS\n");
+        return 1;
+    }
     return 0;
-}
-
-void copyBoard(int *board1[24][70], int *board2[24][70]){ // Copies first arg into second
-    int i,j;
-
-    printf("TESTING: %d \n", *board2[15][24]);
-/*
-    for (i=0;i<24;i++){
-        for (j=0; j<70; j++){
-            //printf("I: %d, J: %d\n",i,j);
-            board2[i][j] = board1[i][j];
-        }
-    }
-*/
-}
-
-void printBoard(){
-    printf("Generation: %d\n", generationNum);
-    int i, j;
-    for (j=0; j<24; j++){
-        for (i=0;i<70;i++){
-            if (board[j][i] == 1){
-                printf("+");
-            }
-            else if (board[j][i] == 0){
-                printf(" ");
-            }
-            else{ //If an error
-                printf("!");
-            }
-        }
-        printf("\n");
-    }
-
 }
 
 int main(){   
 
     enterPattern();
 
-    printBoard();
-
-    copyBoard(&boardCopy, &board);
+    patternDetect();
 
     return 0;
 }
